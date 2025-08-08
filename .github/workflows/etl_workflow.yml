@@ -3,7 +3,7 @@ name: ETL Météo 30 Minutes
 on:
   schedule:
     - cron: '*/30 * * * *' 
-  workflow_dispatch: # Permet de lancer le workflow manuellement
+  workflow_dispatch: #lancement manuel du workflow
 
 jobs:
   run-etl-script:
@@ -25,7 +25,6 @@ jobs:
 
     - name: Exécution du script ETL
       env:
-        # Configuration des variables d'environnement pour vos clés
-        API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
-        DB_PASS: ${{ secrets.NEON_DB_PASS }}
+        OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+        NEON_DB_PASS: ${{ secrets.NEON_DB_PASS }}
       run: python etl.py
