@@ -1,0 +1,31 @@
+name: ETL Météo 30 Minutes
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' 
+  workflow_dispatch: # Permet de lancer le workflow manuellement
+
+jobs:
+  run-etl-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v3
+
+    - name: Configuration de Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13.5'
+
+    - name: Installation des dépendances
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests pandas sqlalchemy psycopg2-binary
+
+    - name: Exécution du script ETL
+      env:
+        # Configuration des variables d'environnement pour vos clés
+        API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+        DB_PASS: ${{ secrets.NEON_DB_PASS }}
+      run: python etl.py
