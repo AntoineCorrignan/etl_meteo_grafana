@@ -2,7 +2,7 @@ name: ETL Météo 30 Minutes
 
 on:
   schedule:
-    - cron: '*/30 * * * *' 
+    - cron: '0 */3 * * *' 
   workflow_dispatch: #lancement manuel du workflow
 
 jobs:
